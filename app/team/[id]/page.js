@@ -15,8 +15,9 @@ export async function generateStaticParams() {
 
 // generateMetadata untuk SEO dinamis berdasarkan [id]
 export async function generateMetadata({ params }) {
+  const resolvedParams = await params
   const data = await import('@/data/team.json')
-  const member = data.default.find((m) => m.id === params.id)
+  const member = data.default.find((m) => m.id === resolvedParams.id)
   if (!member) return { title: 'Not Found' }
   return {
     title: `${member.name} – Tim KosKu`,
@@ -26,9 +27,10 @@ export async function generateMetadata({ params }) {
 
 // SERVER COMPONENT - data fetching di server berdasarkan params.id
 export default async function TeamDetailPage({ params }) {
+  const resolvedParams = await params
   const data = await import('@/data/team.json')
-  const member = data.default.find((m) => m.id === params.id)
-  const allMembers = data.default.filter((m) => m.id !== params.id)
+  const member = data.default.find((m) => m.id === resolvedParams.id)
+  const allMembers = data.default.filter((m) => m.id !== resolvedParams.id)
 
   // Jika ID tidak ditemukan, tampilkan 404
   if (!member) notFound()

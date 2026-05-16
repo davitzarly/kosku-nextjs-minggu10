@@ -34,8 +34,9 @@ const createKosSchema = z.object({
   rating: z.coerce.number().min(0, 'Rating minimal 0').max(5, 'Rating maksimal 5'),
 })
 
-function isAdminSessionValid() {
-  return cookies().get(SESSION_COOKIE)?.value === 'authenticated'
+async function isAdminSessionValid() {
+  const cookieStore = await cookies()
+  return cookieStore.get(SESSION_COOKIE)?.value === 'authenticated'
 }
 
 function getSubmitErrorMessage(error, fallback) {
@@ -47,7 +48,7 @@ function getSubmitErrorMessage(error, fallback) {
 }
 
 export async function createKosAction(formData) {
-  if (!isAdminSessionValid()) {
+  if (!(await isAdminSessionValid())) {
     return {
       status: 'error',
       message: 'Sesi admin tidak valid. Silakan login ulang.',
@@ -92,7 +93,7 @@ export async function createKosAction(formData) {
 }
 
 export async function updateKosAction(formData) {
-  if (!isAdminSessionValid()) {
+  if (!(await isAdminSessionValid())) {
     return {
       status: 'error',
       message: 'Sesi admin tidak valid. Silakan login ulang.',
@@ -132,7 +133,7 @@ export async function updateKosAction(formData) {
 }
 
 export async function deleteKosAction(id) {
-  if (!isAdminSessionValid()) {
+  if (!(await isAdminSessionValid())) {
     return {
       status: 'error',
       message: 'Sesi admin tidak valid. Silakan login ulang.',

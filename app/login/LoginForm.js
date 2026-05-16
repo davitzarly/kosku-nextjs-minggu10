@@ -1,6 +1,7 @@
 'use client'
 
-import { useFormState, useFormStatus } from 'react-dom'
+import { useActionState } from 'react'
+import { useFormStatus } from 'react-dom'
 import { loginAdmin } from './actions'
 import styles from './login.module.css'
 
@@ -20,7 +21,7 @@ function SubmitButton() {
 }
 
 export default function LoginForm({ nextUrl }) {
-  const [state, formAction] = useFormState(loginAdmin, initialState)
+  const [state, formAction] = useActionState(loginAdmin, initialState)
 
   return (
     <form action={formAction} className={styles.form}>

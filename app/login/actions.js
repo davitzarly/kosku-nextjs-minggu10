@@ -31,7 +31,8 @@ export async function loginAdmin(prevState, formData) {
     }
   }
 
-  cookies().set(SESSION_COOKIE, 'authenticated', {
+  const cookieStore = await cookies()
+  cookieStore.set(SESSION_COOKIE, 'authenticated', {
     httpOnly: true,
     maxAge: 60 * 60 * 2,
     path: '/',
@@ -43,6 +44,7 @@ export async function loginAdmin(prevState, formData) {
 }
 
 export async function logoutAdmin() {
-  cookies().delete(SESSION_COOKIE)
+  const cookieStore = await cookies()
+  cookieStore.delete(SESSION_COOKIE)
   redirect('/login')
 }
