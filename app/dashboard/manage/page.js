@@ -28,6 +28,10 @@ export default async function ManageDashboardPage({ searchParams }) {
       error?.message ||
       'Dashboard belum bisa mengambil data Supabase. Jalankan SQL supabase/kos_properties.sql terlebih dahulu.'
   }
+  const dashboardKey = [
+    query,
+    properties.map((property) => `${property.id}:${property.price}:${property.availability}`).join('|'),
+  ].join('::')
 
   return (
     <section className={styles.dashboard}>
@@ -70,6 +74,7 @@ export default async function ManageDashboardPage({ searchParams }) {
         )}
 
         <DashboardClient
+          key={dashboardKey}
           initialProperties={properties}
           initialQuery={query}
           totalCount={allProperties.length}

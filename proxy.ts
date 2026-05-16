@@ -6,7 +6,7 @@ function isAuthenticated(request: NextRequest) {
   return request.cookies.get(SESSION_COOKIE)?.value === 'authenticated'
 }
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl
   const authenticated = isAuthenticated(request)
 

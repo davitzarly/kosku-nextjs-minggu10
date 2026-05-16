@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useOptimistic, useState, useTransition } from 'react'
+import { useOptimistic, useState, useTransition } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { createKosAction, deleteKosAction, updateKosAction } from './actions'
 import styles from './dashboard.module.css'
@@ -77,11 +77,6 @@ export default function DashboardClient({
     properties,
     applyOptimisticAction
   )
-
-  useEffect(() => {
-    setSearchValue(initialQuery)
-    setProperties(initialProperties)
-  }, [initialProperties, initialQuery])
 
   const updateUrlQuery = (value) => {
     const params = new URLSearchParams(searchParams.toString())
